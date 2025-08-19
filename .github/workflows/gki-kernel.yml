@@ -157,7 +157,7 @@ jobs:
           # Sukisu的补丁仓库
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
           # LXC
-          git clone https://github.com/TapetalArray/GKI-Custom.git gki-patch
+          # git clone https://github.com/TapetalArray/GKI-Custom.git gki-patch
           
       - name: 设置 CONFIG 环境变量
         run: |
