@@ -245,7 +245,12 @@ jobs:
         run: |
           echo "更改为配置目录: $CONFIG..."
           cd "$CONFIG"
-
+          # Copy LXC
+          cp ../gki-patch/config/gki_defconfig-android12-5.10 ./common/arch/arm64/configs/gki_defconfig
+          cd ./common
+          git apply $GITHUB_WORKSPACE/gki-patch/patchs/*.patch
+          cd ..
+          
           if [ "${{ inputs.kernelsu_variant }}" == "Official" ]; then
             echo "Adding KernelSU Official..."
             curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash $BRANCH
@@ -271,11 +276,7 @@ jobs:
           cp ../susfs4ksu/kernel_patches/50_add_susfs_in_gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}.patch ./common/
           cp ../susfs4ksu/kernel_patches/fs/* ./common/fs/
           cp ../susfs4ksu/kernel_patches/include/linux/* ./common/include/linux/
-          # Copy LXC
-          cp ../gki-patch/config/gki_defconfig-android12-5.10 ./common/arch/arm64/configs/gki_defconfig
-          cd ./common
-          git apply $GITHUB_WORKSPACE/gki-patch/patchs/*.patch
-          cd ..
+
           
           if [ "${{ inputs.kernelsu_variant }}" == "Official" ]; then
             echo "Applying SUSFS patches for Official KernelSU..."
