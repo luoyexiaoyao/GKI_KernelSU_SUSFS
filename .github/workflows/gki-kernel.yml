@@ -246,10 +246,10 @@ jobs:
           echo "更改为配置目录: $CONFIG..."
           cd "$CONFIG"
           # Copy LXC
-          cp ../gki-patch/config/gki_defconfig-android12-5.10 ./common/arch/arm64/configs/gki_defconfig
-          cd ./common
-          git apply $GITHUB_WORKSPACE/gki-patch/patchs/*.patch
-          cd ..
+          # cp ../gki-patch/config/gki_defconfig-android12-5.10 ./common/arch/arm64/configs/gki_defconfig
+          # cd ./common
+          # git apply $GITHUB_WORKSPACE/gki-patch/patchs/*.patch
+          # cd ..
           
           if [ "${{ inputs.kernelsu_variant }}" == "Official" ]; then
             echo "Adding KernelSU Official..."
