@@ -437,7 +437,7 @@ jobs:
           CONFIG_FILE="$CONFIG/common/arch/arm64/configs/gki_defconfig"
           
           cd "$CONFIG/common"
-          git apply ../android-kernel-build/patches/*
+          git apply ../../android-kernel-build/patches/*
           
           echo "Changing to configuration directory: $CONFIG_FILE..."
           echo "CONFIG_DEFAULT_BBR=y" >> "$CONFIG_FILE"
