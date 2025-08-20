@@ -45,7 +45,7 @@ on:
         required: true
         type: boolean
         default: true
-      custom:
+      use_lxc:
         required: true
         type: boolean
         description: 'Enable LXC, Docker'
@@ -66,6 +66,7 @@ jobs:
       version: ${{ inputs.version }}
       use_zram: ${{ inputs.use_zram }}
       use_kpm: ${{ inputs.use_kpm }}
+      use_lxc: ${{ inputs.use_lxc }}
   get-ksu-manager:
     if: ${{ inputs.get_manager }}
     uses: ./.github/workflows/get-manager.yml
