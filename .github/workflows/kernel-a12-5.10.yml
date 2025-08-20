@@ -36,6 +36,10 @@ on:
         required: true
         type: boolean
         default: true
+      use_lxc:
+        required: true
+        type: boolean
+        description: 'Enable LXC, Docker'
   
 jobs:
   build-kernel-a12-5-10-kernelsu-susfs:
@@ -98,5 +102,6 @@ jobs:
       version: ${{ inputs.version || '' }}
       use_zram: ${{ inputs.use_zram }}
       use_kpm: ${{ inputs.use_kpm }}
+      use_lxc: ${{ inputs.use_lxc }}
       supp_op: ${{ inputs.supp_op || false }}
 
