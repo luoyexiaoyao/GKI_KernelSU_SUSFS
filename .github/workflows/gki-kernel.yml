@@ -436,6 +436,8 @@ jobs:
         run: |
           CONFIG_FILE="$CONFIG/common/arch/arm64/configs/gki_defconfig"
           echo "Changing to configuration directory: $CONFIG_FILE..."
+          echo "CONFIG_DEFAULT_BBR=y" >> "$CONFIG_FILE"
+          
           echo "CONFIG_SYSVIPC=y" >> "$CONFIG_FILE"
           echo "CONFIG_POSIX_MQUEUE=y" >> "$CONFIG_FILE"
           echo "CONFIG_CGROUP_DEVICE=y" >> "$CONFIG_FILE"
@@ -449,7 +451,7 @@ jobs:
           echo "CONFIG_PID_NS=y" >> "$CONFIG_FILE"
           echo "CONFIG_IPC_NS=y" >> "$CONFIG_FILE"
           echo "CONFIG_CGROUP_DEVICE=y" >> "$CONFIG_FILE"
-          sed -i "s/CONFIG_MODULE_SCMVERSION=y/# CONFIG_MODULE_SCMVERSION is not set" "$CONFIG_FILE"
+          sed -i "s/CONFIG_MODULE_SCMVERSION=y/# CONFIG_MODULE_SCMVERSION is not set/g" "$CONFIG_FILE"
            
       - name: 添加SUSFS配置设置
         run: |
