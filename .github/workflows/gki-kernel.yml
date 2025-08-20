@@ -45,6 +45,10 @@ on:
         required: true
         type: boolean
         default: true
+      use_lxc:
+        required: true
+        type: boolean
+        description: 'Enable LXC, Docker'
       supp_op:
         required: true
         type: boolean
@@ -427,7 +431,11 @@ jobs:
           echo "Changing to configuration directory: $CONFIG_FILE..."
           echo "CONFIG_DEFAULT_BBR=y" >> "$CONFIG_FILE"
 
-          # LXC
+      - name: 设置LXC配置
+        if: ${{ inputs.use_lxc }}
+        run: |
+          CONFIG_FILE="$CONFIG/common/arch/arm64/configs/gki_defconfig"
+          echo "Changing to configuration directory: $CONFIG_FILE..."
           echo "CONFIG_SYSVIPC=y" >> "$CONFIG_FILE"
           echo "CONFIG_POSIX_MQUEUE=y" >> "$CONFIG_FILE"
           echo "CONFIG_CGROUP_DEVICE=y" >> "$CONFIG_FILE"
