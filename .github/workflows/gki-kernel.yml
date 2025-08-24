@@ -161,7 +161,7 @@ jobs:
           # Sukisu的补丁仓库
           git clone https://github.com/ShirkNeko/SukiSU_patch.git
           # LXC
-          # git clone https://github.com/sunflower2333/android-kernel-build --depth=1
+          git clone https://github.com/1orz/android-gki-custom.git
           
       - name: 设置 CONFIG 环境变量
         run: |
@@ -219,6 +219,14 @@ jobs:
           echo "obj-y += hmbird_patch.o" >> Makefile
           tail -n 3 Makefile
       
+      - name: 设置LXC配置
+        if: ${{ inputs.use_lxc }}
+        run: |
+          cp "$CONFIG"/../android-gki-custom/config/gki_defconfig-android12-5.10 "$CONFIG"/common/arch/arm64/configs/gki_defconfig
+          cd "$CONFIG"/common
+          git apply $GITHUB_WORKSPACE/patches/android12-5.10/*.patch
+
+          
       - name: 确定 KernelSU 的分支
         run: |
           branch_input="${{ inputs.kernelsu_branch }}"
@@ -430,37 +438,6 @@ jobs:
           CONFIG_FILE="$CONFIG/common/arch/arm64/configs/gki_defconfig"
           echo "Changing to configuration directory: $CONFIG_FILE..."
           echo "CONFIG_DEFAULT_BBR=y" >> "$CONFIG_FILE"
-
-      - name: 设置LXC配置
-        if: ${{ inputs.use_lxc }}
-        run: |
-          CONFIG_FILE="$CONFIG/common/arch/arm64/configs/gki_defconfig"
-          echo "Changing to configuration directory: $CONFIG_FILE..."
-          
-          # echo "CONFIG_DEFAULT_BBR=y" >> "$CONFIG_FILE"
-          echo "CONFIG_PID_NS=y" >> "$CONFIG_FILE"
-          echo "CONFIG_IPC_NS=y" >> "$CONFIG_FILE"
-          
-          echo "CONFIG_CGROUP_DEVICE=y" >> "$CONFIG_FILE"
-
-          echo "CONFIG_IP6_NF_TARGET_MASQUERADE=y" >> "$CONFIG_FILE"
-          
-          echo "CONFIG_NETFILTER_XT_TARGET_CHECKSUM=y" >> "$CONFIG_FILE"
-
-          echo "CONFIG_NETFILTER_XT_MATCH_ADDRTYPE=y" >> "$CONFIG_FILE"
-
-          echo "CONFIG_IP6_NF_NAT=y" >> "$CONFIG_FILE"
-
-          echo "CONFIG_POSIX_MQUEUE=y" >> "$CONFIG_FILE"
-          
-          echo "CONFIG_USER_NS=y" >> "$CONFIG_FILE"
-
-          # echo "CONFIG_SYSVIPC=y" >> "$CONFIG_FILE"
-          # echo "CONFIG_DEVTMPFS=y" >> "$CONFIG_FILE"
-          # echo "CONFIG_NULL_TTY=y" >> "$CONFIG_FILE"
-
-          # echo "CONFIG_CGROUP_DEVICE=y" >> "$CONFIG_FILE"
-          sed -i "s/CONFIG_MODULE_SCMVERSION=y/# CONFIG_MODULE_SCMVERSION is not set/g" "$CONFIG_FILE"
            
       - name: 添加SUSFS配置设置
         run: |
