@@ -224,7 +224,7 @@ jobs:
         run: |
           cp "$CONFIG"/../android-gki-custom/config/gki_defconfig-android12-5.10 "$CONFIG"/common/arch/arm64/configs/gki_defconfig
           cd "$CONFIG"/common
-          git apply ../../patches/android12-5.10/*.patch
+          git apply "$CONFIG"/../android-gki-custom/patches/android12-5.10/*.patch
 
           
       - name: 确定 KernelSU 的分支
